@@ -1,0 +1,10 @@
+---
+- name: copy remote files
+  hosts: cdhosts
+  become: True
+  tasks: 
+    - name: Ansible fetch files from rem server to local machine
+      fetch: 
+        src: /usr/local/cdunix/ndm/cfg/{{ inventory_hostname }}/license.key
+        dest: /home/ngth/files/license.key.{{ inventory_hostname }}
+        flat: yes

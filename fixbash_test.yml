@@ -1,0 +1,11 @@
+---
+- hosts: cyclone
+  gather_facts: False
+  tasks: 
+    - name: add group doejo
+      group: name=doejo state=present
+    - name: create user doejo
+      user: name=doejo comment="Joe Doe" uid=1000 group=doejo
+    - name: generate ssh key for doejo
+      user: name=doejo generate_ssh_key=yes ssh_key_type=ecdsa ssh_key_file=.ssh/id_ecdsa ssh_key_bits=256
+

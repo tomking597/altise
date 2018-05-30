@@ -1,0 +1,7 @@
+---
+- hosts: cyclone
+  remote_user: ngth
+  tasks:
+  - name: test connection
+    ping:
+    remote_user: ngth

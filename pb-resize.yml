@@ -1,0 +1,8 @@
+---
+- name: Resizing /tmp to +512M
+  hosts: cyclone
+  aix_filesystem:
+    filesystem: /tmp
+    size: +512M
+    state: present
+

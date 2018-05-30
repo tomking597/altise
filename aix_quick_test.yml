@@ -1,0 +1,38 @@
+---
+- hosts: daldev1
+  gather_facts: False
+  tasks: 
+    - name: add group doejo
+      group: name=doejo state=present
+    - name: create user doejo
+      user: name=doejo comment="Joe Doe" uid=1000 group=doejo
+    - name: generate ssh key for doejo
+      user: name=doejo generate_ssh_key=yes ssh_key_type=ecdsa ssh_key_file=.ssh/id_ecdsa ssh_key_bits=256
+    - name: create logical volume lvroot
+      command: mklv -t jfs2 -y lvroot rootvg 1G 
+      args:
+        creates: /dev/lvroot
+    - name: create logical volume lvtools
+      command: mklv -t jfs2 -y lvtools rootvg 1G 
+      args:
+        creates: /dev/lvtools
+    - name: create filesystem /root
+      command: crfs -v jfs2 -A yes -m /root -d lvroot
+      args:
+        creates: /root
+    - name: create filesystem /tools
+      command: crfs -v jfs2 -A yes -m /tools -d lvtools
+      args:
+        creates: /tools
+    - name: change permissions on /root
+      file: path="/root" mode=0700 owner=root group=system
+    - name: mount /root
+      mount: name=/root src=/dev/lvroot state=mounted fstype=jfs2
+    - name: mount /tools
+      mount: name=/tools src=/dev/lvtools state=mounted fstype=jfs2
+    - name: change root home directory
+      user: name=root home=/root
+    - name: deploy authorized key
+      authorized_key: user=root key="{{ lookup('file', '/home/doejo/.ssh/id_rsa.pub') }}"
+    - name: deploy root profile
+      copy:  src=root_profile dest=/root/.profile owner=root group=system

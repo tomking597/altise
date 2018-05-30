@@ -1,0 +1,9 @@
+---
+- name: deploy tarball
+  hosts: zorro
+  become: True
+  tasks: 
+    - name: deploy anything
+      template: >
+        src=~ngth/local/bin/usrloc.tar
+        dest=/usr/local/bin/usrloc.tar

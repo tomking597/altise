@@ -1,0 +1,8 @@
+---
+- hosts: typhoon
+  remote_user: ngth
+  tasks:
+  - service: name=httpd state=started
+    become: yes
+    become_user: root
+    become_method: sudo

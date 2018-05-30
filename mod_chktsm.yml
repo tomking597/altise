@@ -1,0 +1,12 @@
+---
+- hosts: sandpit
+  sudo_user: hollota
+  sudo: yes
+  gather_facts: False
+  tasks: 
+    - name: modify the script
+      command: cat chk_tsm.sh |sed 's/bin\/dsmcad  1 /bin64\/dsmcad 1/' > /tmp/chk_tsm.sh 
+    - name: move the file
+      command: mv /tmp/chk_tsm.sh /usr/local/bin/
+    - name: chmod on the file
+      command: chmod 775 /usr/local/bin/chk_tsm.sh

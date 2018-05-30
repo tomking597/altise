@@ -1,0 +1,8 @@
+---
+- name: create user on remote
+  hosts: daltest
+  become: True
+  gather_facts: False
+  tasks: 
+    - name: create user doejo
+      user: name=doejo comment="Joe Doe from Moe" uid=1000 group=doejo

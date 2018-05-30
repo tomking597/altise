@@ -1,0 +1,21 @@
+---
+- name: "SUMA on AIX"
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+
+  #######################################################################
+  ### SUMA on AIX: Range of targets
+  #######################################################################
+
+  - name: "AIX SUMA: Range of targets"
+    aix_suma:
+      oslevel: '7100-04-02-1614'
+      location: ''
+      targets: quimby[7:12]
+      action: download
+    ignore_errors: True
+
+    register: targets
+  - debug: var=targets.debug_targets

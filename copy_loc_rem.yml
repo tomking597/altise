@@ -1,0 +1,10 @@
+---
+- name: copy files from local to remote
+  hosts: hwssidba01
+  become: True
+  tasks: 
+    - name: copy files from local to rem machine
+      copy: 
+        src:  files/ssinix
+        dest: /tmp/ssinix
+        owner: root mode=0440
