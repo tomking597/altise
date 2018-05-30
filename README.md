@@ -1,2 +1,3 @@
 # altise
-ansible code automation rollout
+# project altise: acquiring ansible coding skills
+
